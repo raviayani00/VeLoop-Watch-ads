@@ -196,17 +196,17 @@ export default function WatchAds() {
             </div>
           </div>
           
-          <div className="col-md-8">
+      <div className="col-md-8">
             <div className="bg-dark p-4 rounded-3 border border-secondary h-100">
               <div className="d-flex justify-content-between align-items-center mb-3">
-                <h6 className="fw-bold mb-0 text-white">Recent Earnings</h6>
+           <h6 className="fw-bold mb-0 text-white">Recent Earnings</h6>
                 <button type="button" className="btn btn-link text-info p-0 small text-decoration-none">View all</button>
               </div>
-              <div className="list-group list-group-flush bg-transparent">
-                {ads.slice(0, 4).map((ad, idx) => (
+    <div className="list-group list-group-flush bg-transparent">
+        {ads.slice(0, 4).map((ad, idx) => (
                   <div key={idx} className="list-group-item bg-transparent text-white px-0 d-flex justify-content-between align-items-center border-secondary">
                     <span>{ad.title}</span>
-                    <span className="text-warning fw-bold">+{ad.reward} VEs</span>
+<span className="text-warning fw-bold">+{ad.reward} VEs</span>
                   </div>
                 ))}
               </div>
