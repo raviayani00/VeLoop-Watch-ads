@@ -11,7 +11,7 @@ export default function WatchAds() {
   const [ads, setAds] = useState(initialAdsData);
   const [stats, setStats] = useState(userStats);
   const [activeTab, setActiveTab] = useState('watch');
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true); 
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   const handleWatchComplete = (adId, rewardEarned) => {
     setAds(prevAds => prevAds.map(ad => ad.id === adId ? { ...ad, watched: true } : ad));
@@ -26,6 +26,7 @@ export default function WatchAds() {
   return (
     <div className="bg-black text-white min-vh-100 d-flex overflow-hidden position-relative">
       
+      {/* Responsive Styles for Mobile Drawer & Desktop Toggle */}
       <style>{`
         @media (max-width: 768px) {
           .custom-sidebar {
@@ -128,7 +129,7 @@ export default function WatchAds() {
         {/* Top Header */}
         <div className="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom border-secondary">
           <div className="d-flex align-items-center gap-3">
-            {/* Arrow Toggle Button */}
+            {/* Arrow Toggle Button (Chevron Left / Right) */}
             <button 
               type="button" 
               onClick={() => setIsSidebarOpen(!isSidebarOpen)} 
