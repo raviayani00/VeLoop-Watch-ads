@@ -9,57 +9,124 @@
   position: relative;
 }
 
-/* --- Sidebar Styling for Desktop --- */
+/* --- Sidebar Styling (Desktop & Default) --- */
 .sidebar {
   width: 260px;
-  background-color: #1e1e1e;
-  border-right: 1px solid #2a2a2a;
-  transition: all 0.3s ease-in-out;
+  background-color: #18181b;
+  border-right: 1px solid #27272a;
+  transition: transform 0.3s ease-in-out;
   flex-shrink: 0;
   min-height: 100vh;
-  z-index: 100;
+  padding: 24px 16px;
+  z-index: 1000;
 }
 
-/* --- Main Content Styling --- */
+/* Logo Styling */
+.logo {
+  font-size: 20px;
+  font-weight: bold;
+  color: #fbbf24;
+  margin-bottom: 35px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Navigation List & Items (Colorful & Clean) */
+.sidebar ul, .navList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sidebar li, .navItem {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  color: #9ca3af;
+  font-weight: 500;
+  transition: all 0.2s ease-in-out;
+}
+
+/* Hover Effect */
+.sidebar li:hover {
+  background-color: #27272a;
+  color: #ffffff;
+}
+
+/* Active Colorful Item (Jaise aapke screenshot mein blue tha) */
+.sidebar li.active, .sidebar li[aria-current="page"], .activeItem {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+/* Hidden by default on desktop */
+.mobileMenuBtn {
+  display: none;
+}
+
+/* --- Main Content --- */
 .mainContent {
   flex-grow: 1;
-  padding: 24px;
+  padding: 30px;
   background-color: #121212;
   overflow-y: auto;
   width: 100%;
 }
 
 /* ==========================================
-   MOBILE RESPONSIVE FIX (Screen <= 768px)
+   MOBILE RESPONSIVE VIEW (Screen <= 768px)
    ========================================== */
 @media screen and (max-width: 768px) {
   .dashboardContainer {
-    flex-direction: column; /* Mobile par layout stack hoga */
+    flex-direction: column;
   }
 
+  /* Mobile par sidebar screen ke baahar slide-in drawer ban jayegi */
   .sidebar {
-    width: 100%;
-    min-height: auto;
-    height: auto;
-    /* Agar aap chahte hain ki mobile par sidebar icons sirf ek line mein dikhein ya collapse ho jaye: */
-    display: flex;
-    overflow-x: auto;
-    padding: 10px;
-    border-right: none;
-    border-bottom: 1px solid #2a2a2a;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    transform: translateX(-100%);
+    width: 250px;
+    background-color: #18181b;
+    box-shadow: 8px 0 25px rgba(0, 0, 0, 0.7);
+    z-index: 1200;
   }
 
-  /* Sidebar ke items ko mobile mein horizontal ya compact karne ke liye */
-  .sidebar ul, .sidebar nav {
+  /* Jab menu khulega tab ye class active hogi */
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  /* Mobile Menu Toggle Button Style */
+  .mobileMenuBtn {
     display: flex;
-    flex-direction: row;
-    gap: 15px;
-    width: 100%;
     align-items: center;
-    justify-content: space-around;
+    justify-content: center;
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    z-index: 1300;
+    background-color: #18181b;
+    color: #ffffff;
+    border: 1px solid #27272a;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.4);
   }
 
   .mainContent {
-    padding: 12px;
+    padding: 16px;
+    padding-top: 75px; /* Top button ke liye space */
   }
 }

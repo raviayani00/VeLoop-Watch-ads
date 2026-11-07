@@ -3,7 +3,7 @@ import { initialAdsData, userStats } from '../data/dummyData';
 import AdCard from '../components/AdCard';
 import { 
   LayoutDashboard, PlaySquare, Award, Wallet, History, 
-  User, Settings, HelpCircle, Flame, Menu 
+  User, Settings, HelpCircle, Flame, ChevronLeft, ChevronRight 
 } from 'lucide-react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -11,7 +11,7 @@ export default function WatchAds() {
   const [ads, setAds] = useState(initialAdsData);
   const [stats, setStats] = useState(userStats);
   const [activeTab, setActiveTab] = useState('watch');
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true); // Desktop aur mobile dono ke liye toggle state
 
   const handleWatchComplete = (adId, rewardEarned) => {
     setAds(prevAds => prevAds.map(ad => ad.id === adId ? { ...ad, watched: true } : ad));
@@ -24,15 +24,58 @@ export default function WatchAds() {
   };
 
   return (
-    <div className="bg-black text-white min-vh-100 d-flex overflow-hidden">
+    <div className="bg-black text-white min-vh-100 d-flex overflow-hidden position-relative">
+      
+      {/* Custom Responsive Animation Style for Mobile & Desktop */}
+      <style>{`
+        @media (max-width: 768px) {
+          .custom-sidebar {
+            position: fixed !important;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            z-index: 1100 !important;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease-in-out !important;
+            width: 260px !important;
+          }
+          .custom-sidebar.mobile-open {
+            transform: translateX(0) !important;
+          }
+          .sidebar-overlay {
+            display: block !important;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0,0,0,0.6);
+            z-index: 1050;
+          }
+        }
+        @media (min-width: 769px) {
+          .sidebar-overlay {
+            display: none !important;
+          }
+        }
+      `}</style>
+
+      {/* Mobile Backdrop Overlay */}
+      {isSidebarOpen && window.innerWidth <= 768 && (
+        <div 
+          className="sidebar-overlay" 
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
+
       {/* Sidebar */}
       <div 
-        className="d-flex flex-column flex-shrink-0 p-3 bg-dark border-end border-secondary" 
+        className={`custom-sidebar d-flex flex-column flex-shrink-0 p-3 bg-dark border-end border-secondary ${isSidebarOpen ? 'mobile-open' : ''}`}
         style={{ 
-          width: isSidebarOpen ? '260px' : '80px', 
-          transition: 'width 0.3s ease-in-out',
+          width: window.innerWidth > 768 ? (isSidebarOpen ? '260px' : '80px') : '260px', 
           minHeight: '100vh',
-          zIndex: 1000
+          zIndex: 1000,
+          transition: 'width 0.3s ease-in-out'
         }}
       >
         <div className="d-flex align-items-center mb-4 px-2 overflow-hidden" style={{ whiteSpace: 'nowrap' }}>
@@ -57,7 +100,10 @@ export default function WatchAds() {
               <li className="nav-item mb-1" key={tab.id}>
                 <button 
                   type="button"
-                  onClick={() => setActiveTab(tab.id)}
+                  onClick={() => {
+                    setActiveTab(tab.id);
+                    if (window.innerWidth <= 768) setIsSidebarOpen(false);
+                  }}
                   title={tab.name}
                   className={`nav-link w-100 text-start d-flex align-items-center py-2 ${isActive ? 'active bg-primary text-white' : 'text-white opacity-75'}`}
                   style={{ border: 'none', background: isActive ? undefined : 'transparent', cursor: 'pointer', whiteSpace: 'nowrap' }}
@@ -79,11 +125,11 @@ export default function WatchAds() {
       </div>
 
       {/* Main Content Area */}
-      <div className="flex-grow-1 p-4 overflow-auto" style={{ maxHeight: '100vh' }}>
+      <div className="flex-grow-1 p-4 overflow-auto" style={{ maxHeight: '100vh', width: '100%' }}>
         {/* Top Header */}
         <div className="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom border-secondary">
           <div className="d-flex align-items-center gap-3">
-            {/* Toggle Button */}
+            {/* Arrow Toggle Button */}
             <button 
               type="button" 
               onClick={() => setIsSidebarOpen(!isSidebarOpen)} 
@@ -91,7 +137,7 @@ export default function WatchAds() {
               style={{ width: '40px', height: '40px', cursor: 'pointer' }}
               title="Toggle Sidebar"
             >
-              <Menu size={20} />
+              {isSidebarOpen ? <ChevronLeft size={22} /> : <ChevronRight size={22} />}
             </button>
             <div>
               <h4 className="mb-0 fw-bold text-white">Watch Ads</h4>
@@ -177,7 +223,7 @@ export default function WatchAds() {
           ))}
         </div>
 
-        {/* Bottom Section: Streak & Recent Earnings */}
+        {/* Bottom Section */}
         <div className="row g-4">
           <div className="col-md-4">
             <div className="bg-dark p-4 rounded-3 border border-secondary h-100">
@@ -196,17 +242,17 @@ export default function WatchAds() {
             </div>
           </div>
           
-      <div className="col-md-8">
+          <div className="col-md-8">
             <div className="bg-dark p-4 rounded-3 border border-secondary h-100">
               <div className="d-flex justify-content-between align-items-center mb-3">
-           <h6 className="fw-bold mb-0 text-white">Recent Earnings</h6>
+                <h6 className="fw-bold mb-0 text-white">Recent Earnings</h6>
                 <button type="button" className="btn btn-link text-info p-0 small text-decoration-none">View all</button>
               </div>
-    <div className="list-group list-group-flush bg-transparent">
-        {ads.slice(0, 4).map((ad, idx) => (
+              <div className="list-group list-group-flush bg-transparent">
+                {ads.slice(0, 4).map((ad, idx) => (
                   <div key={idx} className="list-group-item bg-transparent text-white px-0 d-flex justify-content-between align-items-center border-secondary">
                     <span>{ad.title}</span>
-<span className="text-warning fw-bold">+{ad.reward} VEs</span>
+                    <span className="text-warning fw-bold">+{ad.reward} VEs</span>
                   </div>
                 ))}
               </div>
