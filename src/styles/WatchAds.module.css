@@ -1,4 +1,3 @@
-/* --- Global Container --- */
 .dashboardContainer {
   display: flex;
   min-height: 100vh;
@@ -9,7 +8,6 @@
   position: relative;
 }
 
-/* --- Sidebar Styling (Desktop & Default) --- */
 .sidebar {
   width: 260px;
   background-color: #18181b;

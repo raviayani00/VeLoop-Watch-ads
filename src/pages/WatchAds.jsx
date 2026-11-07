@@ -11,7 +11,7 @@ export default function WatchAds() {
   const [ads, setAds] = useState(initialAdsData);
   const [stats, setStats] = useState(userStats);
   const [activeTab, setActiveTab] = useState('watch');
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true); // Desktop aur mobile dono ke liye toggle state
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true); 
 
   const handleWatchComplete = (adId, rewardEarned) => {
     setAds(prevAds => prevAds.map(ad => ad.id === adId ? { ...ad, watched: true } : ad));
@@ -26,7 +26,6 @@ export default function WatchAds() {
   return (
     <div className="bg-black text-white min-vh-100 d-flex overflow-hidden position-relative">
       
-      {/* Custom Responsive Animation Style for Mobile & Desktop */}
       <style>{`
         @media (max-width: 768px) {
           .custom-sidebar {
