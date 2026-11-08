@@ -129,7 +129,7 @@ export default function WatchAds() {
         {/* Top Header */}
         <div className="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom border-secondary">
           <div className="d-flex align-items-center gap-3">
-            {/* Arrow Toggle Button (Chevron Left / Right) */}
+            {/* Arrow Toggle Button (Chevron Left / Right) */} //updated sidebar Toggle //
             <button 
               type="button" 
               onClick={() => setIsSidebarOpen(!isSidebarOpen)} 
