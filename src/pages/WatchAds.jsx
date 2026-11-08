@@ -123,13 +123,12 @@ export default function WatchAds() {
           </button>
         </div>
       </div>
-
-      {/* Main Content Area */}
       <div className="flex-grow-1 p-4 overflow-auto" style={{ maxHeight: '100vh', width: '100%' }}>
         {/* Top Header */}
         <div className="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom border-secondary">
           <div className="d-flex align-items-center gap-3">
             {/* Arrow Toggle Button (Chevron Left / Right) */} 
+
             <button 
               type="button" 
               onClick={() => setIsSidebarOpen(!isSidebarOpen)} 
